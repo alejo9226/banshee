@@ -1,26 +1,37 @@
-import { Container } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import GetMeetings from './GetMeetings'
+import EditMeetings from './EditMeeting'
 import PostMeetings from './PostMeetings'
 
-function Meetings () {
-  const history = useHistory()
-  const redirect = () => {
-    const urlItems = history.location.pathname.split('/')
-    console.log(urlItems)
 
-    switch (urlItems[2]) {
-      case 'list':
-        return <GetMeetings />
-      case 'post':
+function Customers () {
+
+  const history = useHistory()
+
+  const renderPage = () => {
+    const urlItems = history.location.pathname.split('/')
+    urlItems.splice(4, 1)
+    urlItems.splice(0, 2)
+    const lastUrl = urlItems.join('')
+    console.log(lastUrl)
+    switch (lastUrl) {
+      case 'meetingsadd':
         return <PostMeetings />
+      case 'meetings':
+        return <GetMeetings />
+      case 'meetingsedit':
+        return <EditMeetings />
+      default:
+        return <Container><h1>Bienvenido al Dashboard</h1></Container>
     }
   }
+
   return (
     <Container>
-      {redirect()}
+      {renderPage()}
     </Container>
   )
 }
 
-export default Meetings
+export default Customers

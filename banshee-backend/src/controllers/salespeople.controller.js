@@ -26,5 +26,17 @@ module.exports = {
       console.log(err)
       res.status(400).json({ message: 'Sellers could not be found', data: err })
     }
-  }
+  },
+  async singleDelete (req, res) {
+    try {
+      const { sellerid } = req.params
+      console.log(sellerid)
+      const deletedSeller = await Seller.findOneAndDelete({ _id: sellerid })
+      console.log(deletedSeller)
+      res.status(200).json({ message: 'Seller deleted', data: deletedSeller })
+    } catch (err) {
+      console.log(err)
+      res.status(400).json({ message: 'Seller could not be deleted', data: err })
+    }
+  },
 }

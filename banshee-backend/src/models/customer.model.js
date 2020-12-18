@@ -4,6 +4,19 @@ const customerSchema = new Schema({
   nit: {
     type: String,
     required: true,
+    validate: {
+      async validator(nit) {
+        try {
+          const customer = await models.Customer.findOne({ nit });
+          return !customer;
+        } catch (err) {
+          return false;
+        }
+      },
+      message: "Cliente ya existe",
+    },
+    type: String,
+    required: true,
   },
   fullname: {
     type: String,
@@ -41,10 +54,35 @@ const customerSchema = new Schema({
     type: Number,
     required: true,
   },
-  meetings: {
+  meetings: [{
     type: Schema.Types.ObjectId,
-    ref: "Condo",
+    ref: "Meeting",
+  }]
+})
+
+customerSchema.post('findOneAndUpdate', async function() {
+  const updatedCustomer = this._update['$set']
+
+  console.log('voy a editar este cliente', updatedCustomer)
+  const customer = await Customer.findOne({ _id: updatedCustomer._id })
+  console.log('visitas: ', customer.meetings)
+
+  for (let i = 0; i < customer.meetings.length; i++) {
+  const meeting = await models.Meeting.findOne({ _id: customer.meetings[i] })
+  console.log('visita actual', meeting)
+  meeting.meetingValue = (updatedCustomer.meetingsRate / 100) * meeting.netAmount
+  console.log('visita modificada', meeting)
+  meeting.save({ validateBeforeSave: false })
   }
+  customer.save({ validateBeforeSave: false })
+  
+
+})
+customerSchema.post('findOneAndDelete', async function(doc) {
+  
+  console.log('voy a borrar este cliente')
+  await models.Meeting.deleteMany({ customer: doc._id })
+  
 })
 
 const Customer = model("Customer", customerSchema);

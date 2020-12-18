@@ -4,6 +4,7 @@ function connect() {
   mongoose.connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
   });
 
   mongoose.connection.once("open", () => {

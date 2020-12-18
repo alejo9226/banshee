@@ -13,6 +13,10 @@ const sellerSchema = new Schema({
     type: String,
     required: true,
   },
+  meetings: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Meeting'
+  }]
 },
 {
   timestamps: true

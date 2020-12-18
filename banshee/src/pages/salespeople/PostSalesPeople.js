@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Form, Button, Jumbotron } from 'react-bootstrap'
 
@@ -8,19 +9,24 @@ function PostSalesPeople () {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
+  const history = useHistory()
+
   const createSeller = async (e) => {
     e.preventDefault()
     console.log(inputs)
-    /* const newSeller = inputs */
+    const token = localStorage.getItem('token')
     try {
       const { data } = await axios({
         method: 'POST',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/salespeople',
-        data: inputs
+        data: inputs,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
       setMessage(data.message)
-      console.log('rta', data.message)
+      history.push('/dashboard/salespeople')
     } catch ({ response }) {
       console.log(response.data.message)
       console.dir(response)

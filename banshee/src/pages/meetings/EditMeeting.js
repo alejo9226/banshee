@@ -1,32 +1,55 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Form, Button, Jumbotron, Container } from 'react-bootstrap'
+import { Form, Button, Container } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { PageTitle } from '../customers/GetCustomers'
 
 
-function PostMeetings () {
+function EditMeetings () {
+
   const [inputs, setInputs] = useState({})
-  const [salesPeople, setSalesPeople] = useState([])
+  const [meeting, setMeeting] = useState([])
+  const [sellers, setSellers] = useState([])
   const [customers, setCustomers] = useState([])
-  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
 
   const history = useHistory()
 
   useEffect(() => {
+    async function getMeeting () {
+      const urlItems = history.location.pathname.split('/')
+      const token = localStorage.getItem('token')
+      try {
+        const { data } = await axios({
+          method: 'GET',
+          baseURL: process.env.REACT_APP_SERVER_URL,
+          url: `/meeting/${urlItems[4]}`,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        setInputs(data.data)
+        setMeeting(data.data)
+        setLoading(false)
+      } catch ({ response }) {
+        setLoading(false)
+        setError(response.data.message)
+      }
+    }
     async function getSellers () {
       const token = localStorage.getItem('token')
       try {
         const { data } = await axios({
           method: 'GET',
           baseURL: process.env.REACT_APP_SERVER_URL,
-          url: '/salespeople',
+          url: `/salespeople`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-        setSalesPeople(data.data)
+        setSellers(data.data)
       } catch (err) {
         console.dir(err)
       }
@@ -37,46 +60,20 @@ function PostMeetings () {
         const { data } = await axios({
           method: 'GET',
           baseURL: process.env.REACT_APP_SERVER_URL,
-          url: '/customer',
+          url: `/customer`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-        console.log(data.data)
         setCustomers(data.data)
       } catch (err) {
         console.dir(err)
       }
     }
+    getMeeting()
     getSellers()
     getCustomers()
-  }, [])
-
-  const createMeeting = async (e) => {
-    e.preventDefault()
-    console.log(inputs)
-    const token = localStorage.getItem('token')
-    try {
-      const { data } = await axios({
-        method: 'POST',
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/meeting',
-        data: inputs,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      setMessage(data.message)
-      console.log('rta', data.message)
-      setTimeout(() => {
-        history.push('/dashboard/meetings')
-      }, 2000);
-    } catch ({ response }) {
-      console.log(response.data.message)
-      console.dir(response)
-      setError(response.data.message)
-    }
-  }
+  }, [history.location.pathname])
 
   const handleChange = (e) => {
     console.log(e)
@@ -87,18 +84,44 @@ function PostMeetings () {
     setInputs(inputs => ({...inputs,[id]: value}))
   }
 
-  console.log('estado', inputs)
+  const updateMeeting = async (e) => {
+    console.log('el anterior', meeting)
+    console.log('el despues', inputs)
+    e.preventDefault()
+    const token = localStorage.getItem('token')
+    try {
+      const { data } = await axios({
+        method: 'PUT',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: `/meeting/${meeting._id}`,
+        data: inputs,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setMessage(data.message)
+      setTimeout(() => {
+        history.push('/dashboard/meetings')
+      }, 2000);
+    } catch ({ response }) {
+      console.dir(response)
+    }
+  }
+
+  console.log('visita', meeting)
+  if(loading) return <Container><p>loading...</p></Container>
+  if(error) return <Container><p>Something went wrong</p></Container>
   return (
     <Container>
-      <PageTitle>Crear visita</PageTitle>
-      <Form onSubmit={createMeeting}>
+      <PageTitle>Editar visita</PageTitle>
+      <Form onSubmit={updateMeeting}>
        <Form.Group controlId="date">
           <Form.Label>Fecha</Form.Label>
           <Form.Control 
             type="date" 
             placeholder="Ingresa fecha" 
             name="date" 
-            value={inputs.date} 
+            value={inputs.date ? inputs.date.split('T')[0] : inputs.date } 
             onChange={handleChange}
             required
           />
@@ -115,12 +138,12 @@ function PostMeetings () {
             <option>
               Escoge el vendedor
             </option>
-          {!!salesPeople &&
-            salesPeople.length &&
-            salesPeople.map((person) => {
+          {!!sellers &&
+            sellers.length &&
+            sellers.map((seller) => {
               return (
-                <option value={person._id} key={person._id}>
-                  {person.name}
+                <option value={seller._id} key={seller._id}>
+                  {seller.name}
                 </option>
               );
             })}
@@ -172,7 +195,7 @@ function PostMeetings () {
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Crear visita
+          Guardar visita
         </Button>
         {error || message}
       </Form>
@@ -180,4 +203,4 @@ function PostMeetings () {
   )
 }
 
-export default PostMeetings
+export default EditMeetings
