@@ -1,0 +1,5 @@
+{"_id":{"$oid":"5fdbd3ca6dd3614dbde36f17"},"city":"Bogota","state":"Cundinamarca","country":"Colombia","createdAt":{"$date":"2020-12-17T21:55:22.493Z"},"updatedAt":{"$date":"2020-12-17T21:55:22.493Z"},"__v":0}
+{"_id":{"$oid":"5fdbe2250a7d3c5106a07b85"},"city":"Cali","state":"Valle del Cauca","country":"Colombia","createdAt":{"$date":"2020-12-17T22:56:37.915Z"},"updatedAt":{"$date":"2020-12-17T22:56:37.915Z"},"__v":0}
+{"_id":{"$oid":"5fdbe6bd0a7d3c5106a07b86"},"city":"Medellín","state":"Antioquía","country":"Colombia","createdAt":{"$date":"2020-12-17T23:16:13.068Z"},"updatedAt":{"$date":"2020-12-17T23:16:13.068Z"},"__v":0}
+{"_id":{"$oid":"5fdd3ef4ac8d9055753695c1"},"city":"Toronto","state":"Ontario","country":"Canada","createdAt":{"$date":"2020-12-18T23:44:52.801Z"},"updatedAt":{"$date":"2020-12-18T23:44:52.801Z"},"__v":0}
+{"_id":{"$oid":"5fdd401cac8d9055753695c6"},"city":"Montreal","state":"Quebec","country":"Canada","createdAt":{"$date":"2020-12-18T23:49:48.027Z"},"updatedAt":{"$date":"2020-12-18T23:49:48.027Z"},"__v":0}

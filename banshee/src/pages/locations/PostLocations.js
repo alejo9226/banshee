@@ -38,7 +38,7 @@ function PostLocations () {
       setMessage(data.message)
       console.log('rta', data.message)
       setTimeout(() => {
-        history.push('/location')
+        history.push('/dashboard/locations')
       }, 2000);
     } catch ({ response }) {
       console.log(response.data.message)
@@ -49,7 +49,7 @@ function PostLocations () {
 
   return (
     <Container>
-    <PageTitle>Crear Vendedor</PageTitle>
+    <PageTitle>Agregar Ciudad</PageTitle>
       <Form onSubmit={createLocation}>
         <Form.Group controlId="city">
           <Form.Label>Ciudad</Form.Label>
@@ -59,6 +59,7 @@ function PostLocations () {
             name="city" 
             value={inputs.city} 
             onChange={handleChange}
+            required
           />
         </Form.Group>
         <Form.Group controlId="state">
@@ -69,6 +70,7 @@ function PostLocations () {
             name="state" 
             value={inputs.state} 
             onChange={handleChange}
+            required
           />
         </Form.Group>
         <Form.Group controlId="country">
@@ -79,6 +81,7 @@ function PostLocations () {
             name="country" 
             value={inputs.country} 
             onChange={handleChange}
+            required
           />
         </Form.Group>
         <Button variant="primary" type="submit">

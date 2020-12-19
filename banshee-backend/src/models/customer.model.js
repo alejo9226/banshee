@@ -63,15 +63,11 @@ const customerSchema = new Schema({
 customerSchema.post('findOneAndUpdate', async function() {
   const updatedCustomer = this._update['$set']
 
-  console.log('voy a editar este cliente', updatedCustomer)
   const customer = await Customer.findOne({ _id: updatedCustomer._id })
-  console.log('visitas: ', customer.meetings)
 
   for (let i = 0; i < customer.meetings.length; i++) {
   const meeting = await models.Meeting.findOne({ _id: customer.meetings[i] })
-  console.log('visita actual', meeting)
   meeting.meetingValue = (updatedCustomer.meetingsRate / 100) * meeting.netAmount
-  console.log('visita modificada', meeting)
   meeting.save({ validateBeforeSave: false })
   }
   customer.save({ validateBeforeSave: false })
@@ -80,7 +76,6 @@ customerSchema.post('findOneAndUpdate', async function() {
 })
 customerSchema.post('findOneAndDelete', async function(doc) {
   
-  console.log('voy a borrar este cliente')
   await models.Meeting.deleteMany({ customer: doc._id })
   
 })

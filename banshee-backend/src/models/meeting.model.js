@@ -36,7 +36,6 @@ const meetingSchema = new Schema({
 meetingSchema.post('findOneAndDelete', async function(doc) {
   
   const customer = await models.Customer.findByIdAndUpdate(doc.customer)
-  console.log(customer.meetings)
   customer.amountLeft += doc.meetingValue
   const index = customer.meetings.findIndex(meeting  => {
     return meeting === doc._id
@@ -49,7 +48,7 @@ meetingSchema.post('findOneAndDelete', async function(doc) {
 meetingSchema.pre('save', async function () {
   if (this._id) {
     const customer = await models.Customer.findById(this.customer)
-    customer.amountLeft = customer.amount - this.meetingValue
+    customer.amountLeft -= this.meetingValue
     customer.meetings.push(this._id)
     customer.save({ validateBeforeSave: false })
     

@@ -168,7 +168,6 @@ function PostMeetings () {
             name="comments"
             value={inputs.comments}
             onChange={handleChange}
-            required
           />
         </Form.Group>
         <Button variant="primary" type="submit">

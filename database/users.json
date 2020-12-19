@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5fdcc138abc58d135b63f473"},"name":"Alejandro Alfaro","email":"alejo9226@gmail.com","password":"$2b$08$6LZJJuVwjQFoVGDDFcIEU.WNB/eIu.2kCtjGw0cJjtqB0Dg.T82oK","createdAt":{"$date":"2020-12-18T14:48:24.305Z"},"updatedAt":{"$date":"2020-12-18T14:48:24.305Z"},"__v":0}

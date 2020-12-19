@@ -1,0 +1,25 @@
+Yo como usuario puedo registrarme en la aplicacion
+Yo como usuario puedo iniciar sesión en la aplicacion
+Yo como usuario puedo cerrar sesión en la aplicacion
+
+Yo como usuario puedo agregar clientes
+Yo como usuario puedo agregar ubicaciones de operación del negocio
+Yo como usuario puedo agregar visitas a los clientes
+Yo como usuario puedo agregar vendedores
+
+Yo como usuario puedo editar información demográfica de los clientes
+Yo como usuario puedo editar visitas a los clientes
+Yo como usuario puedo editar información de los vendedores
+
+Yo como usuario puedo borrar un cliente especifico
+Yo como usuario puedo borrar una ubicacion especifica de operación del negocio
+Yo como usuario puedo borrar una visita especifica a un cliente
+Yo como usuario puedo borrar un vendedor especifico
+
+Yo como usuario puedo ver la información de cada cliente
+Yo como usuario puedo ver un listado de clientes
+Yo como usuario puedo ver un listado de ubicaciones de operación del negocio
+Yo como usuario puedo ver un listado de visitas que se han hecho un cliente específico
+Yo como usuario puedo ver un listado maestro de visitas
+Yo como usuario puedo ver la información de cada vendedor
+Yo como usuario puedo ver un listado de vendedores
